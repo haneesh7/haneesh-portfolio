@@ -26,6 +26,13 @@ function splitTextNode(node: Node, splitFn: (text: string) => Node[]): Node[] {
 }
 
 function splitIntoChars(el: HTMLElement): HTMLElement[] {
+  if (el.getAttribute("data-split") === "true") {
+    el.textContent = el.getAttribute("data-original-text");
+  } else {
+    el.setAttribute("data-original-text", el.textContent || "");
+    el.setAttribute("data-split", "true");
+  }
+
   const spans: HTMLElement[] = [];
   
   const charSplitter = (text: string) => {
@@ -50,6 +57,13 @@ function splitIntoChars(el: HTMLElement): HTMLElement[] {
 }
 
 function splitIntoWords(el: HTMLElement): HTMLElement[] {
+  if (el.getAttribute("data-split") === "true") {
+    el.textContent = el.getAttribute("data-original-text");
+  } else {
+    el.setAttribute("data-original-text", el.textContent || "");
+    el.setAttribute("data-split", "true");
+  }
+
   const spans: HTMLElement[] = [];
 
   const wordSplitter = (text: string) => {
@@ -69,6 +83,7 @@ function splitIntoWords(el: HTMLElement): HTMLElement[] {
     });
     return nodes;
   };
+
 
   const childNodes = Array.from(el.childNodes);
   el.textContent = "";

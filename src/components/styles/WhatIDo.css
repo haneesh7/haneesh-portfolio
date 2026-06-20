@@ -290,6 +290,7 @@
     padding-bottom: 50px;
   }
   .what-box-in {
+    display: flex;
     height: 500px;
     margin-left: -50px;
   }

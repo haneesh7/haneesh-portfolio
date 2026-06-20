@@ -24,6 +24,13 @@ function splitTextNode(node: Node, splitFn: (text: string) => Node[]): Node[] {
 }
 
 function splitIntoChars(el: HTMLElement): HTMLElement[] {
+  if (el.getAttribute("data-split") === "true") {
+    el.textContent = el.getAttribute("data-original-text");
+  } else {
+    el.setAttribute("data-original-text", el.textContent || "");
+    el.setAttribute("data-split", "true");
+  }
+
   const spans: HTMLElement[] = [];
   
   const charSplitter = (text: string) => {
