@@ -138,7 +138,8 @@ export function initialFX() {
   h21Els.forEach((el) => h21Chars.push(...splitIntoChars(el)));
   const h22Chars: HTMLElement[] = [];
   h22Els.forEach((el) => h22Chars.push(...splitIntoChars(el)));
-
+  gsap.set(h2Info1Chars, { opacity: 0 });
+  gsap.set(h22Chars, { opacity: 0 });
   LoopText(h2InfoChars, h2Info1Chars);
   LoopText(h21Chars, h22Chars);
 }
@@ -147,28 +148,29 @@ function LoopText(Text1: HTMLElement[], Text2: HTMLElement[]) {
   const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
   const delay = 4;
   const delay2 = delay * 2 + 1;
+  const yVal = window.innerWidth > 1024 ? 80 : 35;
 
   tl.fromTo(
     Text2,
-    { opacity: 0, y: 80 },
+    { opacity: 0, y: yVal },
     { opacity: 1, duration: 1.2, ease: "power3.inOut", y: 0, stagger: 0.1, delay },
     0
   )
     .fromTo(
       Text1,
-      { y: 80 },
+      { y: yVal },
       { duration: 1.2, ease: "power3.inOut", y: 0, stagger: 0.1, delay: delay2 },
       1
     )
     .fromTo(
       Text1,
       { y: 0 },
-      { y: -80, duration: 1.2, ease: "power3.inOut", stagger: 0.1, delay },
+      { y: -yVal, duration: 1.2, ease: "power3.inOut", stagger: 0.1, delay },
       0
     )
     .to(
       Text2,
-      { y: -80, duration: 1.2, ease: "power3.inOut", stagger: 0.1, delay: delay2 },
+      { y: -yVal, duration: 1.2, ease: "power3.inOut", stagger: 0.1, delay: delay2 },
       1
     );
 }

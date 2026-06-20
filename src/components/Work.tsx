@@ -8,7 +8,8 @@ gsap.registerPlugin(useGSAP);
 
 const Work = () => {
   useGSAP(() => {
-  let translateX: number = 0;
+    if (window.innerWidth <= 900) return;
+    let translateX: number = 0;
 
   function setTranslateX() {
     const box = document.getElementsByClassName("work-box");
