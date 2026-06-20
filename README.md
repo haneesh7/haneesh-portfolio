@@ -1,13 +1,13 @@
-# My Portfolio Website - Overview 🚀
+# Haneesh Gowda - Personal Portfolio Website 🚀
 
-This repository contains the open-source version of my personal portfolio website.  
+This repository contains the source code for my personal 3D portfolio website.  
 Feel free to explore the code and use it for learning and inspiration.
 
 ---
 
 ## ⚠️ Usage Notice
 
-This project is shared for learning purposes only.
+This project is shared for learning and reference purposes only.
 
 Please do NOT:
 - Clone or replicate the full website or design
@@ -15,21 +15,21 @@ Please do NOT:
 - Use this project for commercial/client work
 - Create tutorials or content using this exact project
 
-If you use parts of the code, you must provide proper credit linking back to the original repository.
+If you use parts of the code, please provide proper credit linking back to this repository.
 
-Build your own version — don’t just copy.
-
-— Moncy Yohannan
+— Haneesh Gowda
 
 ---
 
 ## 🛠️ Instructions
 
-I have modified the GSAP Club plugins using trial versions.  
-⚠️ Note: Trial plugins cannot be used for production or hosting.
+This project uses GSAP Trial plugins for scroll animations and effects.
+To run the project locally, install dependencies and start the dev server:
 
-For official GSAP Club plugins, refer here:  
-https://gsap.com/docs/v3/Installation/
+```bash
+npm install
+npm run dev
+```
 
 ---
 
@@ -39,27 +39,9 @@ React • TypeScript • GSAP • Three.js • WebGL • HTML • CSS • JavaSc
 
 ---
 
-## 🎨 Assets Usage
-
-Some 3D assets included in this repository are free to use for learning purposes.
-
-However:
-
-- The original 3D avatar used on my live portfolio is NOT included in this repository
-- That avatar is a custom asset created over ~1 month
-- It is not open source and not available for reuse
-
-Any usage, extraction, or redistribution of that avatar from my live website is strictly prohibited.
-
----
-
-![Protfolio-Preview](https://github.com/user-attachments/assets/3c4557e7-6392-4928-b8a9-7b2476ef4edd)
-
----
-
 ## 📄 License
 
 This project is licensed under the Personal Portfolio License (PPL) v1.0.
+See the [LICENSE](file:///c:/Users/2025/Documents/haneesh portfolio/LICENSE) file for full details.
 
-See the LICENSE file for full details
 
