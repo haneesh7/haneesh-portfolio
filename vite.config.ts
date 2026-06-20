@@ -5,4 +5,12 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   base: "/haneesh-portfolio/",
+  resolve: {
+    alias: {
+      "gsap-trial": "gsap",
+    },
+  },
+  build: {
+    chunkSizeWarningLimit: 3000,
+  },
 });
