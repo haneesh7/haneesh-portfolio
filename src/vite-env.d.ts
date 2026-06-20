@@ -16,7 +16,7 @@ declare module "gsap-trial/ScrollSmoother" {
     static refresh(value?: boolean): void;
     scrollTop(value?: number): number;
     paused(value?: boolean): any;
-    scrollTo(target: any, smooth?: boolean, position?: string): void;
+    scrollTo(target: any, smooth?: boolean): void;
   }
 }
 
