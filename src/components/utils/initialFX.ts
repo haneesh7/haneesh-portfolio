@@ -1,16 +1,50 @@
 import gsap from "gsap";
 import { smoother } from "../Navbar";
 
+function splitTextNode(node: Node, splitFn: (text: string) => Node[]): Node[] {
+  const result: Node[] = [];
+  if (node.nodeType === Node.TEXT_NODE) {
+    const text = node.textContent || "";
+    const spans = splitFn(text);
+    spans.forEach(s => result.push(s));
+  } else if (node.nodeType === Node.ELEMENT_NODE) {
+    const element = node as HTMLElement;
+    if (element.tagName === "BR") {
+      result.push(element.cloneNode(true));
+    } else {
+      const cloned = element.cloneNode(false) as HTMLElement;
+      Array.from(element.childNodes).forEach(child => {
+        const childSpans = splitTextNode(child, splitFn);
+        childSpans.forEach(cs => cloned.appendChild(cs));
+      });
+      result.push(cloned);
+    }
+  }
+  return result;
+}
+
 function splitIntoChars(el: HTMLElement): HTMLElement[] {
-  const text = el.textContent || "";
+  const spans: HTMLElement[] = [];
+  
+  const charSplitter = (text: string) => {
+    return text.split("").map((char) => {
+      const span = document.createElement("span");
+      span.textContent = char === " " ? "\u00A0" : char;
+      span.style.display = "inline-block";
+      spans.push(span);
+      return span;
+    });
+  };
+
+  const childNodes = Array.from(el.childNodes);
   el.textContent = "";
-  return text.split("").map((char) => {
-    const span = document.createElement("span");
-    span.textContent = char === " " ? "\u00A0" : char;
-    span.style.display = "inline-block";
-    el.appendChild(span);
-    return span;
+  
+  childNodes.forEach((child) => {
+    const splitNodes = splitTextNode(child, charSplitter);
+    splitNodes.forEach((node) => el.appendChild(node));
   });
+
+  return spans;
 }
 
 export function initialFX() {
