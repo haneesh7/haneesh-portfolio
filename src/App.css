@@ -18,11 +18,18 @@
 @media only screen and (max-width: 1400px) {
   .section-container {
     width: 900px;
+    max-width: calc(100% - 80px);
   }
 }
 @media only screen and (max-width: 900px) {
   .section-container {
-    width: 500px;
-    max-width: var(--cWidth);
+    width: calc(100% - 40px);
+    max-width: 100%;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .section-container {
+    width: calc(100% - 24px);
+    max-width: 100%;
   }
 }

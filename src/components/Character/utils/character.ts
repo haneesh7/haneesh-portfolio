@@ -3,8 +3,8 @@ import { DRACOLoader, GLTF, GLTFLoader } from "three-stdlib";
 import { setCharTimeline, setAllTimeline } from "../../utils/GsapScroll";
 
 const setCharacter = (
-  renderer: THREE.WebGLRenderer,
-  scene: THREE.Scene,
+  _renderer: THREE.WebGLRenderer,
+  _scene: THREE.Scene,
   camera: THREE.PerspectiveCamera
 ) => {
   const loader = new GLTFLoader();
@@ -17,15 +17,15 @@ const setCharacter = (
       try {
         let character: THREE.Object3D;
         loader.load(
-          import.meta.env.BASE_URL + "models/character.glb?v=10",
-          async (gltf) => {
+          import.meta.env.BASE_URL + "models/character.glb",
+          (gltf) => {
             character = gltf.scene;
-            await renderer.compileAsync(character, camera, scene);
+            // No compileAsync — shaders compile lazily on first render, avoids freeze
             character.traverse((child: any) => {
               if (child.isMesh) {
                 const mesh = child as THREE.Mesh;
-                child.castShadow = true;
-                child.receiveShadow = true;
+                child.castShadow = false;  // cheaper
+                child.receiveShadow = false;
                 mesh.frustumCulled = true;
               }
             });

@@ -19,6 +19,15 @@ const Loading = ({ percent }: { percent: number }) => {
     }, 200);
   }
 
+  // Hard timeout: if model hasn't loaded in 8s, force-open the site anyway
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setLoaded(true);
+      setTimeout(() => setIsLoaded(true), 400);
+    }, 8000);
+    return () => clearTimeout(timeout);
+  }, []);
+
   useEffect(() => {
     import("./utils/initialFX").then((module) => {
       if (isLoaded) {

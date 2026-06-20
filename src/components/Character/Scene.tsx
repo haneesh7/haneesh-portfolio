@@ -106,10 +106,11 @@ const Scene = () => {
 
       const renderer = new THREE.WebGLRenderer({
         alpha: true,
-        antialias: true,
+        antialias: window.devicePixelRatio < 2, // skip antialias on high-DPI to save GPU
+        powerPreference: "high-performance",
       });
       renderer.setSize(container.width, container.height);
-      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // cap at 1.5x
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1;
       canvasDiv.current.appendChild(renderer.domElement);
@@ -144,7 +145,7 @@ const Scene = () => {
             setTimeout(() => {
               light.turnOnLights();
               animations.startIntro();
-            }, 2500);
+            }, 500); // reduced from 2500ms
           });
           window.addEventListener("resize", () =>
             handleResize(renderer, camera, canvasDiv, character)
