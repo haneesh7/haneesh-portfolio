@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./styles/Loading.css";
 import { useLoading } from "../context/LoadingProvider";
 
@@ -9,36 +9,34 @@ const Loading = ({ percent }: { percent: number }) => {
   const [loaded, setLoaded] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [clicked, setClicked] = useState(false);
+  const doneRef = useRef(false);
 
-  if (percent >= 100) {
-    setTimeout(() => {
-      setLoaded(true);
-      setTimeout(() => {
-        setIsLoaded(true);
-      }, 400);
-    }, 200);
-  }
+  const finish = () => {
+    if (doneRef.current) return;
+    doneRef.current = true;
+    setLoaded(true);
+    setTimeout(() => setIsLoaded(true), 300);
+  };
 
-  // Hard timeout: if model hasn't loaded in 8s, force-open the site anyway
+  // Finish as soon as percent hits 100
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setLoaded(true);
-      setTimeout(() => setIsLoaded(true), 400);
-    }, 8000);
-    return () => clearTimeout(timeout);
+    if (percent >= 100) finish();
+  }, [percent]);
+
+  // Hard cap: force open after 4 seconds NO MATTER WHAT
+  useEffect(() => {
+    const t = setTimeout(finish, 4000);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
+    if (!isLoaded) return;
     import("./utils/initialFX").then((module) => {
-      if (isLoaded) {
-        setClicked(true);
-        setTimeout(() => {
-          if (module.initialFX) {
-            module.initialFX();
-          }
-          setIsLoading(false);
-        }, 300);
-      }
+      setClicked(true);
+      setTimeout(() => {
+        try { module.initialFX?.(); } catch (_) {}
+        setIsLoading(false);
+      }, 250);
     });
   }, [isLoaded]);
 
@@ -53,7 +51,6 @@ const Loading = ({ percent }: { percent: number }) => {
 
   return (
     <>
-
       <div className="loading-screen">
         <div className="loading-marquee">
           <Marquee>
@@ -70,7 +67,7 @@ const Loading = ({ percent }: { percent: number }) => {
             <div className="loading-container">
               <div className="loading-content">
                 <div className="loading-content-in">
-                  Loading <span>{percent}%</span>
+                  Loading <span>{Math.min(percent, 99)}%</span>
                 </div>
               </div>
               <div className="loading-box"></div>
@@ -88,25 +85,15 @@ const Loading = ({ percent }: { percent: number }) => {
 export default Loading;
 
 export const setProgress = (setLoading: (value: number) => void) => {
-  let percent: number = 0;
+  let percent = 0;
 
-  // Fast initial ramp: 0→80% in ~1.5 seconds
-  let interval = setInterval(() => {
-    if (percent < 80) {
-      const rand = Math.round(Math.random() * 12) + 4; // 4-16% jumps
-      percent = Math.min(80, percent + rand);
+  // Fast ramp: 0 → 85% in ~2 seconds
+  const interval = setInterval(() => {
+    if (percent < 85) {
+      percent = Math.min(85, percent + Math.round(Math.random() * 10) + 5);
       setLoading(percent);
     } else {
       clearInterval(interval);
-      // Slow hold at 80-90% waiting for model to load
-      interval = setInterval(() => {
-        if (percent < 90) {
-          percent = percent + 1;
-          setLoading(percent);
-        } else {
-          clearInterval(interval);
-        }
-      }, 800);
     }
   }, 80);
 
@@ -118,18 +105,17 @@ export const setProgress = (setLoading: (value: number) => void) => {
   function loaded() {
     return new Promise<number>((resolve) => {
       clearInterval(interval);
-      // Snap to 100% quickly once model is ready
-      interval = setInterval(() => {
+      const snap = setInterval(() => {
         if (percent < 100) {
-          percent += 3;
-          if (percent > 100) percent = 100;
+          percent = Math.min(100, percent + 5);
           setLoading(percent);
         } else {
           resolve(percent);
-          clearInterval(interval);
+          clearInterval(snap);
         }
-      }, 16);
+      }, 20);
     });
   }
+
   return { loaded, percent, clear };
 };
