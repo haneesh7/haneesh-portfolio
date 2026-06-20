@@ -59,21 +59,21 @@ const Work = () => {
               name: "Weapon Detection Using YOLOv8",
               category: "Deep Learning / Computer Vision",
               tools: "Python, YOLOv8, OpenCV, PyTorch",
-              image: "/images/project_yolo.png"
+              image: import.meta.env.BASE_URL + "images/project_yolo.png"
             },
             {
               num: "02",
               name: "Personalized AI Voice Assistant",
               category: "Natural Language Processing",
               tools: "Python, NLP, PyTTSx3, SpeechRecognition",
-              image: "/images/project_assistant.png"
+              image: import.meta.env.BASE_URL + "images/project_assistant.png"
             },
             {
               num: "03",
               name: "Sentiment Analysis Framework",
               category: "NLP / Text Analytics",
               tools: "Python, NLP, NLTK, Scikit-learn",
-              image: "/images/project_sentiment.png"
+              image: import.meta.env.BASE_URL + "images/project_sentiment.png"
             }
           ].map((project, index) => (
             <div className="work-box" key={index}>

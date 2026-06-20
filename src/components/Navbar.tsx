@@ -42,7 +42,7 @@ const Navbar = () => {
   return (
     <>
       <div className="header">
-        <a href="/#" className="navbar-title" data-cursor="disable" aria-label="Haneesh Gowda">
+        <a href={import.meta.env.BASE_URL + "#"} className="navbar-title" data-cursor="disable" aria-label="Haneesh Gowda">
           <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="21" cy="21" r="20" fill="url(#logoGrad)" stroke="rgba(139,63,200,0.4)" strokeWidth="1"/>
             <text x="50%" y="56%" dominantBaseline="middle" textAnchor="middle"
