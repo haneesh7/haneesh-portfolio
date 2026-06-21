@@ -65,7 +65,7 @@ export function initialFX() {
     delay: 1,
   });
 
-  const landingSelectors = [".landing-info h3", ".landing-intro h2", ".landing-intro h1"];
+  const landingSelectors = [".landing-info h3", ".landing-info h2", ".landing-intro h2", ".landing-intro h1"];
   const landingChars: HTMLElement[] = [];
   landingSelectors.forEach((sel) => {
     document.querySelectorAll<HTMLElement>(sel).forEach((el) => {
@@ -87,26 +87,6 @@ export function initialFX() {
     }
   );
 
-  const h2InfoEls = document.querySelectorAll<HTMLElement>(".landing-h2-info");
-  const h2Info1Els = document.querySelectorAll<HTMLElement>(".landing-h2-info-1");
-  const h21Els = document.querySelectorAll<HTMLElement>(".landing-h2-1");
-  const h22Els = document.querySelectorAll<HTMLElement>(".landing-h2-2");
-
-  const h2InfoChars: HTMLElement[] = [];
-  h2InfoEls.forEach((el) => h2InfoChars.push(...splitIntoChars(el)));
-
-  gsap.fromTo(
-    ".landing-info-h2",
-    { opacity: 0, y: 30 },
-    {
-      opacity: 1,
-      duration: 1.2,
-      ease: "power1.inOut",
-      y: 0,
-      delay: 0.8,
-    }
-  );
-
   gsap.fromTo(
     [".header", ".icons-section", ".nav-fade"],
     { opacity: 0 },
@@ -116,54 +96,5 @@ export function initialFX() {
       ease: "power1.inOut",
       delay: 0.1,
     }
-  );
-
-  const h2Info1Chars: HTMLElement[] = [];
-  h2Info1Els.forEach((el) => h2Info1Chars.push(...splitIntoChars(el)));
-  const h21Chars: HTMLElement[] = [];
-  h21Els.forEach((el) => h21Chars.push(...splitIntoChars(el)));
-  const h22Chars: HTMLElement[] = [];
-  h22Els.forEach((el) => h22Chars.push(...splitIntoChars(el)));
-
-  LoopText(h2InfoChars, h2Info1Chars);
-  LoopText(h21Chars, h22Chars);
-}
-
-function LoopText(Text1: HTMLElement[], Text2: HTMLElement[]) {
-  const tl = gsap.timeline({ repeat: -1 });
-  const yVal = window.innerWidth > 1024 ? 80 : 35;
-  const duration = 1.2;
-  const stayDuration = 3;
-
-  // Initial state: Text1 is visible, Text2 is hidden below
-  gsap.set(Text1, { y: 0, opacity: 1 });
-  gsap.set(Text2, { y: yVal, opacity: 0 });
-
-  // Transition 1: Text1 goes up/out, Text2 comes up/in
-  tl.to(Text1, {
-    y: -yVal,
-    opacity: 0,
-    duration,
-    ease: "power3.inOut",
-    stagger: 0.05
-  }, `+=${stayDuration}`)
-  .fromTo(Text2,
-    { y: yVal, opacity: 0 },
-    { y: 0, opacity: 1, duration, ease: "power3.inOut", stagger: 0.05 },
-    `<`
-  )
-  
-  // Transition 2: Text2 goes up/out, Text1 comes up/in
-  .to(Text2, {
-    y: -yVal,
-    opacity: 0,
-    duration,
-    ease: "power3.inOut",
-    stagger: 0.05
-  }, `+=${stayDuration}`)
-  .fromTo(Text1,
-    { y: yVal, opacity: 0 },
-    { y: 0, opacity: 1, duration, ease: "power3.inOut", stagger: 0.05 },
-    `<`
   );
 }

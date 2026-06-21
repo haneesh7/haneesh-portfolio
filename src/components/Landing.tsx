@@ -16,14 +16,8 @@ const Landing = () => {
           </div>
           <div className="landing-info">
             <h3>A Creative</h3>
-            <h2 className="landing-info-h2">
-              <div className="landing-h2-1">AI & ML</div>
-              <div className="landing-h2-2">Engineer</div>
-            </h2>
-            <h2>
-              <div className="landing-h2-info">Engineer</div>
-              <div className="landing-h2-info-1">AI & ML</div>
-            </h2>
+            <h2 className="landing-info-h2">AI & ML</h2>
+            <h2>Engineer</h2>
           </div>
         </div>
       </div>

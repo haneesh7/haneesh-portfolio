@@ -203,7 +203,7 @@
 }
 .landing-info h2 {
   margin: 0;
-  margin-top: -20px;
+  margin-top: 5px;
   margin-left: 20px;
   font-family: "Geist", sans-serif;
   font-weight: 600;
@@ -213,33 +213,17 @@
   display: block;
   text-transform: uppercase;
   letter-spacing: 2px;
-  overflow: hidden;
-  height: 1.2em;
-  white-space: nowrap;
-}
-.landing-h2-info-1 {
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 h2.landing-info-h2 {
   color: #c481ff;
   font-size: 28px;
   width: 100%;
   margin: 0;
+  margin-left: 20px;
   font-family: "Geist", sans-serif;
   font-weight: 600;
   position: relative;
-  margin-left: -5px;
   display: block;
-  overflow: hidden;
-  height: 1.2em;
-  white-space: nowrap;
-}
-.landing-h2-2 {
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 .landing-info-h2::after {
   display: none;
