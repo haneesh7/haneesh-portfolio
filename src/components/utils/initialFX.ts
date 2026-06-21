@@ -96,20 +96,6 @@ export function initialFX() {
   h2InfoEls.forEach((el) => h2InfoChars.push(...splitIntoChars(el)));
 
   gsap.fromTo(
-    h2InfoChars,
-    { opacity: 0, y: 80, filter: "blur(5px)" },
-    {
-      opacity: 1,
-      duration: 1.2,
-      filter: "blur(0px)",
-      ease: "power3.inOut",
-      y: 0,
-      stagger: 0.025,
-      delay: 0.3,
-    }
-  );
-
-  gsap.fromTo(
     ".landing-info-h2",
     { opacity: 0, y: 30 },
     {
@@ -138,39 +124,46 @@ export function initialFX() {
   h21Els.forEach((el) => h21Chars.push(...splitIntoChars(el)));
   const h22Chars: HTMLElement[] = [];
   h22Els.forEach((el) => h22Chars.push(...splitIntoChars(el)));
-  gsap.set(h2Info1Chars, { opacity: 0 });
-  gsap.set(h22Chars, { opacity: 0 });
+
   LoopText(h2InfoChars, h2Info1Chars);
   LoopText(h21Chars, h22Chars);
 }
 
 function LoopText(Text1: HTMLElement[], Text2: HTMLElement[]) {
-  const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
-  const delay = 4;
-  const delay2 = delay * 2 + 1;
+  const tl = gsap.timeline({ repeat: -1 });
   const yVal = window.innerWidth > 1024 ? 80 : 35;
+  const duration = 1.2;
+  const stayDuration = 3;
 
-  tl.fromTo(
-    Text2,
-    { opacity: 0, y: yVal },
-    { opacity: 1, duration: 1.2, ease: "power3.inOut", y: 0, stagger: 0.1, delay },
-    0
+  // Initial state: Text1 is visible, Text2 is hidden below
+  gsap.set(Text1, { y: 0, opacity: 1 });
+  gsap.set(Text2, { y: yVal, opacity: 0 });
+
+  // Transition 1: Text1 goes up/out, Text2 comes up/in
+  tl.to(Text1, {
+    y: -yVal,
+    opacity: 0,
+    duration,
+    ease: "power3.inOut",
+    stagger: 0.05
+  }, `+=${stayDuration}`)
+  .fromTo(Text2,
+    { y: yVal, opacity: 0 },
+    { y: 0, opacity: 1, duration, ease: "power3.inOut", stagger: 0.05 },
+    `<`
   )
-    .fromTo(
-      Text1,
-      { y: yVal },
-      { duration: 1.2, ease: "power3.inOut", y: 0, stagger: 0.1, delay: delay2 },
-      1
-    )
-    .fromTo(
-      Text1,
-      { y: 0 },
-      { y: -yVal, duration: 1.2, ease: "power3.inOut", stagger: 0.1, delay },
-      0
-    )
-    .to(
-      Text2,
-      { y: -yVal, duration: 1.2, ease: "power3.inOut", stagger: 0.1, delay: delay2 },
-      1
-    );
+  
+  // Transition 2: Text2 goes up/out, Text1 comes up/in
+  .to(Text2, {
+    y: -yVal,
+    opacity: 0,
+    duration,
+    ease: "power3.inOut",
+    stagger: 0.05
+  }, `+=${stayDuration}`)
+  .fromTo(Text1,
+    { y: yVal, opacity: 0 },
+    { y: 0, opacity: 1, duration, ease: "power3.inOut", stagger: 0.05 },
+    `<`
+  );
 }

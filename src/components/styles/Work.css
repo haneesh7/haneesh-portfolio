@@ -8,7 +8,7 @@
 }
 .work-section {
   transition: 0s;
-  height: 100vh;
+  height: auto;
   box-sizing: border-box;
   will-change: transform;
 }
@@ -16,41 +16,53 @@
   margin: auto;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: auto;
   align-content: stretch;
 }
 .work-flex {
   width: 100%;
   display: flex;
-  height: 100%;
-  margin-left: -80px;
-  padding-right: 120px;
+  flex-direction: column;
+  height: auto;
+  margin-left: 0;
+  padding-right: 0;
   position: relative;
 }
 .work-box {
-  padding: 80px;
+  padding: 80px 0;
   display: flex;
-  flex-direction: column;
-  width: 600px;
+  flex-direction: row;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
   box-sizing: border-box;
-  border-right: 1px solid #363636;
-  flex-shrink: 0;
-  gap: 50px;
-  justify-content: start;
+  border-bottom: 1px solid #363636;
+  border-right: none;
+  flex-shrink: 1;
+  gap: 80px;
+  justify-content: space-between;
+  align-items: center;
+}
+.work-info {
+  flex: 1;
+}
+.work-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 .work-flex .work-box:nth-child(even) {
-  flex-direction: column-reverse;
+  flex-direction: row-reverse;
 }
 .work-flex::before,
 .work-flex::after {
   content: "";
-  width: calc(50000vw);
+  width: 100%;
   height: 1px;
   background-color: #363636;
   position: absolute;
-  left: 50%;
+  left: 0;
   top: 0;
-  transform: translateX(-50%);
 }
 .work-flex::after {
   top: 100%;
@@ -154,25 +166,11 @@
     font-size: 15px;
   }
   .work-box {
-    width: 450px;
-    padding: 50px;
-  }
-  .work-flex {
-    margin-left: -50px;
-    padding-right: 75px;
+    padding: 50px 20px;
+    gap: 40px;
   }
   .work-section h2 {
     font-size: 50px;
-  }
-}
-@media only screen and (max-width: 1400px) {
-  .work-box {
-    width: 350px;
-    padding: 30px;
-  }
-  .work-flex {
-    margin-left: -30px;
-    padding-right: 45px;
   }
 }
 
@@ -219,11 +217,13 @@
   }
   .work-box {
     width: 100%;
+    max-width: 100%;
     box-sizing: border-box;
     padding: 30px 20px;
     border-right: none;
     border-bottom: 1px solid #363636;
     flex-direction: column !important;
+    flex-shrink: 1;
   }
   .work-title h3 {
     font-size: 28px;
